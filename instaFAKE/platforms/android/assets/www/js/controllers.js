@@ -2,6 +2,10 @@ angular.module('app.controllers', [])
 
 .controller('HomeCtrl', function ($scope) { })
 .controller('ExploreCtrl', function ($scope) {
+    $scope.back = function () {
+        ;
+    };
+
     $scope.clearSearch = function () {
         $scope.search = '';
     };
