@@ -5,26 +5,36 @@ angular.module('app.controllers', [])
     $scope.clearSearch = function () {
         $scope.search = '';
     };
+    $scope.images = [];
+    $scope.loadImages = function () {
+        for (var i = 0; i < 9; i++) {
+            $scope.images.push({ id: i, src: "http://placehold.it/240x240" });
+        }
+    };
+
+    $scope.loadMore = function () {
+        for (var i = 0; i < 3; i++) {
+            var j = $scope.images.length + i;
+            $scope.images.push({ id: j, src: "http://placehold.it/240x240" });
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+        }
+    };
+    
 })
-.controller('CameraCtrl', function ($scope) { })
+.controller('CameraCtrl', function ($scope) {
+})
+
+
 .controller('LikeCtrl', function ($scope) { })
 .controller('ProfileCtrl', function ($scope) { })
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+.controller('ChatsCtrl', function ($scope, Chats) {
+    $scope.chats = Chats.all();
+    $scope.remove = function (chat) {
+        Chats.remove(chat);
+    };
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
+    $scope.chat = Chats.get($stateParams.chatId);
 });

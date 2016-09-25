@@ -48,15 +48,6 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
             }
         }
     })
-    .state('tab.chat-detail', {
-        url: '/chats/:chatId',
-        views: {
-            'tab-home': {
-                templateUrl: 'templates/chat-detail.html',
-                controller: 'ChatDetailCtrl'
-            }
-        }
-    })
 
     .state('tab.explore', {
         url: '/explore',
@@ -64,6 +55,16 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
             'tab-explore': {
                 templateUrl: 'templates/tab-explore.html',
                 controller: 'ExploreCtrl'
+            }
+        }
+    })
+
+    .state('tab.search', {
+        url: '/search',
+        view: {
+            'tab-explore': {
+                templateURL: 'templates/tab-search.html',
+                controller: 'SearchCtrl'
             }
         }
     })
