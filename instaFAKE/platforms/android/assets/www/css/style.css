@@ -1,1 +1,9 @@
 ﻿/* Empty. Add your own CSS if you like */
+.card
+{
+     margin: 0 !important;
+}
+
+.full-width {
+  width: 100%;
+}

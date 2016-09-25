@@ -1,6 +1,14 @@
-angular.module('starter.controllers', [])
+angular.module('app.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('HomeCtrl', function ($scope) { })
+.controller('ExploreCtrl', function ($scope) {
+    $scope.clearSearch = function () {
+        $scope.search = '';
+    };
+})
+.controller('CameraCtrl', function ($scope) { })
+.controller('LikeCtrl', function ($scope) { })
+.controller('ProfileCtrl', function ($scope) { })
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
@@ -19,10 +27,4 @@ angular.module('starter.controllers', [])
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
 });

@@ -1,0 +1,17 @@
+﻿<ion-view hide-nav-bar="true">
+    <ion-header-bar class="bar">
+        <button class="button button-icon ion-android-search"></button>
+        <input type="search"
+               placeholder="Search..."
+               ng-model="search"
+               ng-focus="searchFocused = true"
+               ng-blur="searchFocused = false"
+               ng-change="scrollTop()"
+               class="full-width">
+        <button ng-if="search.length"
+                class="button button-icon ion-android-close input-button"
+                ng-click="clearSearch()">
+        </button>
+    </ion-header-bar>
+</ion-view>
+
