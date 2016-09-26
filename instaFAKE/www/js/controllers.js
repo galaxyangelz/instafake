@@ -65,13 +65,12 @@ angular.module('app.controllers', ['ti-segmented-control'])
 })
 .controller('ProfileCtrl', function ($scope, PersonalInfo) {
     $scope.profile = PersonalInfo.all();
-    $scope.content = [];
+    $scope.grid_images = [];
     $scope.showGrid = function () {
-        for (var i = 0; i < 9; i++) {
-            $scope.content.push({ id: i, src: "http://placehold.it/240x240" });
+        for (var i = 0; i < 3; i++) {
+            $scope.grid_images.push({ id: i, src: "http://placehold.it/240x240" });
         }
     };
-    console.log($scope.content);
 })
 .controller('DiscoverCtrl', function ($scope, People) {
     $scope.showPeople = function () {
@@ -93,5 +92,4 @@ angular.module('app.controllers', ['ti-segmented-control'])
 .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
     $scope.chat = Chats.get($stateParams.chatId);
 });
-
 

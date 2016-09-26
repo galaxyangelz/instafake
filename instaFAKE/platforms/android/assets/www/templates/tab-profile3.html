@@ -1,4 +1,4 @@
-<ion-view hide-back-button="true">
+﻿<ion-view hide-back-button="true">
     <ion-nav-title>
         <h4>{{profile.name}}</h4>
     </ion-nav-title>
@@ -6,7 +6,7 @@
         <a class="button button-clear icon ion-android-person-add" href="#/tab/discover"></a>
         <a class="button button-clear icon ion-android-more-vertical" href="#/tab/options" style="width:2rem"></a>
     </ion-nav-buttons>
-    <ion-content ng-init="showGrid()" class="has-header" nav-direction="enter">
+    <ion-content class="has-header" nav-direction="enter">
         <div class="row">
             <div class="col col-33 item-avatar profile-avatar">
                 <img ng-src="{{profile.avatar}}" />
@@ -38,21 +38,10 @@
         </div>
         <hr />
         <div class="button-bar">
-            <a class="button button-positive icon ion-grid active" href="#/tab/profile"></a>
+            <a class="button button-positive icon ion-grid" href="#/tab/profile"></a>
             <a class="button button-positive icon ion-navicon" href="#/tab/profile1"></a>
             <a class="button button-positive icon ion-location" href="#/tab/profile2"></a>
-            <a class="button button-positive icon ion-ios-pricetags" href="#/tab/profile3"></a>
-        </div>
-        <div class="row" ng-repeat="image in grid_images" ng-if="$index % 3 === 0">
-            <div class="col col-33" ng-if="$index < grid_images.length">
-                <img ng-src="{{grid_images[$index].src}}" width="100%" />
-            </div>
-            <div class="col col-33" ng-if="$index + 1 < grid_images.length">
-                <img ng-src="{{grid_images[$index + 1].src}}" width="100%" />
-            </div>
-            <div class="col col-33" ng-if="$index + 2 < grid_images.length">
-                <img ng-src="{{grid_images[$index + 2].src}}" width="100%" />
-            </div>
+            <a class="button button-positive icon ion-ios-pricetags active" href="#/tab/profile3"></a>
         </div>
     </ion-content>
 </ion-view>

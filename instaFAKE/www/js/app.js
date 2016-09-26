@@ -106,6 +106,33 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented
             }
         }
     })
+    .state('tab.profile1', {
+        url: '/profile1',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/tab-profile1.html',
+                controller: 'ProfileCtrl'
+            }
+        }
+    })
+    .state('tab.profile2', {
+        url: '/profile2',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/tab-profile2.html',
+                controller: 'ProfileCtrl'
+            }
+        }
+    })
+    .state('tab.profile3', {
+        url: '/profile3',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/tab-profile3.html',
+                controller: 'ProfileCtrl'
+            }
+        }
+    })
     .state('tab.discover', {
         url: '/discover',
         views: {

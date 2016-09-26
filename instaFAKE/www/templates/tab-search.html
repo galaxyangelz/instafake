@@ -20,26 +20,26 @@
     </div>
     <ion-content ng-init="showTop()" ng-switch on="type" class="has-header has-subheader" overflow-scroll="false">
         <ion-list ng-switch-default>
-            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="top in content" type="item-text-wrap">
+            <ion-item class="item-avatar item-icon-right" ng-repeat="top in content" type="item-text-wrap">
                 <img ng-src="{{top.face}}">
                 <h2>{{top.name}}</h2>
                 <p>{{top.description}}</p>
             </ion-item>
         </ion-list>
         <ion-list ng-switch-when="people">
-            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="person in content" type="item-text-wrap">
+            <ion-item class="item-avatar item-icon-right" ng-repeat="person in content" type="item-text-wrap">
                 <img ng-src="{{person.face}}">
                 <h2>{{person.name}}</h2>
                 <p>{{person.description}}</p>
             </ion-item>
         </ion-list>
         <ion-list ng-switch-when="tags">
-            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="tag in content" type="item-text-wrap">
+            <ion-item class="item-avatar item-icon-right" ng-repeat="tag in content" type="item-text-wrap">
                 <h2>{{tag.name}}</h2>
             </ion-item>
         </ion-list>
         <ion-list ng-switch-when="places">
-            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="place in content" type="item-text-wrap">
+            <ion-item class="item-avatar item-icon-right" ng-repeat="place in content" type="item-text-wrap">
                 <h2>{{place.name}}</h2>
                 <p>{{place.description}}</p>
             </ion-item>
