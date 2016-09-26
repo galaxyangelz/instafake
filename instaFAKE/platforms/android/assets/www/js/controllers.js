@@ -60,7 +60,7 @@ angular.module('app.controllers', ['ti-segmented-control'])
         $scope.content = Friends.all();
     };
     $scope.showFollowing = function () {
-        $scope.friends = Friends.all();
+        $scope.following = People.all();
     };
 })
 .controller('ProfileCtrl', function ($scope, PersonalInfo) {

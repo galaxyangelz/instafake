@@ -1,0 +1,16 @@
+﻿<ion-view hide-nav-bar="true">
+    <div class="button-bar">
+        <a class="button button-positive active" href="#/tab/like1">FOLLOWING</a>
+        <a class="button button-positive" href="#/tab/like">YOU</a>
+    </div>
+
+    <ion-content ng-init="showFollowing()" class="has-header" overflow-scroll="false" nav-direction="enter">
+        <ion-list>
+            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="person in following" type="item-text-wrap">
+                <img ng-src="{{person.face}}">
+                <p>{{person.name}} {{person.description}}</p>
+                <button class="button icon ion-android-person-add" href="#"></button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

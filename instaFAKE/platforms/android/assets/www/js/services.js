@@ -167,19 +167,19 @@ angular.module('app.services', [])
 .factory('Friends', function () {
     var friends = [{
         id: 1,
-        name: 'Duck',
+        name: 'A1',
         description: 'started following you',
         face: 'img/ben.png'
     },
     {
         id: 2,
-        name: 'Chicken',
+        name: 'B2',
         description: 'is on Instagram',
         face: 'img/mike.png'
     },
     {
         id: 3,
-        name: 'Doge',
+        name: 'C3',
         description: 'is on Instagram',
         face: 'img/perry.png'
     }];

@@ -96,6 +96,15 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented
             }
         }
     })
+    .state('tab.like1', {
+        url: '/like1',
+        views: {
+            'tab-like': {
+                templateUrl: 'templates/tab-like1.html',
+                controller: 'LikeCtrl'
+            }
+        }
+    })
 
     .state('tab.profile', {
         url: '/profile',
