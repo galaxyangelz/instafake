@@ -105,6 +105,33 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented
                 controller: 'ProfileCtrl'
             }
         }
+    })
+    .state('tab.discover', {
+        url: '/discover',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/profile-discover.html',
+                controller: 'DiscoverCtrl'
+            }
+        }
+    })
+    .state('tab.setting', {
+        url: '/options',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/profile-options.html',
+                controller: 'OptionsCtrl'
+            }
+        }
+    })
+    .state('tab.edit', {
+        url: '/edit',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/profile-edit.html',
+                controller: 'EditCtrl'
+            }
+        }
     });
 
     $urlRouterProvider.otherwise('/tab/home');

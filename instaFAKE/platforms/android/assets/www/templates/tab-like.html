@@ -1,12 +1,24 @@
 ﻿<ion-view hide-nav-bar="true">
     <div class="bar bar-header">
         <ti-segmented-control on-select="buttonClicked($index)" class="full-width">
-            <ti-segmented-control-button ng-click="showFollowing()" class="button-positive" title="'FOLLOWING'"></ti-segmented-control-button>
-            <ti-segmented-control-button ng-click="showYou()" class="button-positive" title="'YOU'" selected></ti-segmented-control-button>
+            <ti-segmented-control-button ng-click="type=following;showFollowing()" class="button-positive" title="'FOLLOWING'"></ti-segmented-control-button>
+            <ti-segmented-control-button ng-click="type=friend;showFriend()" class="button-positive" title="'YOU'" selected></ti-segmented-control-button>
         </ti-segmented-control>
     </div>
 
-    <ion-content has-header overflow-scroll="false">
-
+    <ion-content ng-init="showFriend()" ng-switch="type" class="has-header" overflow-scroll="false">
+        <ion-list ng-switch-when="following">
+            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="friend in friends" type="item-text-wrap">
+                <img ng-src="{{friend.face}}">
+                <p>{{friend.name}}</p>
+            </ion-item>
+        </ion-list>
+        <ion-list ng-switch-default>
+            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="person in content" type="item-text-wrap">
+                <img ng-src="{{person.face}}">
+                <p>{{person.name}} {{person.description}}</p>
+                <button class="button icon ion-android-person-add" href="#"></button>
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>

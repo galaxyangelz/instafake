@@ -18,7 +18,7 @@
             <ti-segmented-control-button ng-click="type=places;showPlaces()" class="button-positive" title="'PLACES'"></ti-segmented-control-button>
         </ti-segmented-control>
     </div>
-    <ion-content ng-init="showTop()" ng-switch="type" class="has-header has-subheader">
+    <ion-content ng-init="showTop()" ng-switch on="type" class="has-header has-subheader" overflow-scroll="false">
         <ion-list ng-switch-default>
             <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="top in content" type="item-text-wrap">
                 <img ng-src="{{top.face}}">
@@ -44,8 +44,5 @@
                 <p>{{place.description}}</p>
             </ion-item>
         </ion-list>
-    </ion-content>
-    <ion-content>
-
     </ion-content>
 </ion-view>

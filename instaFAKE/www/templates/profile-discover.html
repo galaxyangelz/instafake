@@ -1,0 +1,17 @@
+﻿<ion-view view-title="Discover People">
+    <ion-content overflow-scroll="false">
+        <ion-list ng-init="showPeople()">
+            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="person in content" type="item-text-wrap">
+                <img ng-src="{{person.face}}">
+                <h2>{{person.name}}</h2>
+                <p>{{person.description}}</p>
+                <button class="button button-small button-outline button-positive right">
+                    FOLLOW
+                </button>
+                <button class="button button-small button-outline button-stable right">
+                    HIDE
+                </button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

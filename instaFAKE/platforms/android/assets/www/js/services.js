@@ -1,9 +1,6 @@
 angular.module('app.services', [])
 
 .factory('Chats', function () {
-    // Might use a resource here that returns a JSON array
-
-    // Some fake testing data
     var chats = [{
         id: 0,
         name: 'Ben Sparrow',
@@ -164,6 +161,59 @@ angular.module('app.services', [])
                 }
             }
             return null;
+        }
+    };
+})
+.factory('Friends', function () {
+    var friends = [{
+        id: 1,
+        name: 'Duck',
+        description: 'started following you',
+        face: 'img/ben.png'
+    },
+    {
+        id: 2,
+        name: 'Chicken',
+        description: 'is on Instagram',
+        face: 'img/mike.png'
+    },
+    {
+        id: 3,
+        name: 'Doge',
+        description: 'is on Instagram',
+        face: 'img/perry.png'
+    }];
+    return {
+        all: function () {
+            return friends;
+        },
+        get: function (friendId) {
+            for (var i = 0; i < friends.length; i++) {
+                if (friends[i].id === parseInt(friendId)) {
+                    return friends[i];
+                }
+            }
+            return null;
+        }
+    };
+})
+.factory('PersonalInfo', function () {
+    var Info = {
+        avatar: "https://pbs.twimg.com/profile_images/653312117886447616/szRCKaD_.jpg",
+        name: "Whatever",
+        nickname: "Anyway",
+        website: "",
+        bio: "",
+        email: "whatever@doge.com",
+        mobile: "217341",
+        gender: "male",
+        posts: "10",
+        followers: "20",
+        following: "100"
+    };
+    return {
+        all: function () {
+            return Info;
         }
     };
 })

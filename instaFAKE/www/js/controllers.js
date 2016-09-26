@@ -1,6 +1,13 @@
 angular.module('app.controllers', ['ti-segmented-control'])
 
-.controller('HomeCtrl', function ($scope) { })
+.controller('HomeCtrl', function ($scope, $ionicModal) {
+
+    /*$ionicModal.fromTemplateUrl('templates/modal.html', {
+        scope: $scope
+    }).then(function (modal) {
+        $scope.modal = modal;
+    });*/
+})
 .controller('ExploreCtrl', function ($scope) {
     $scope.images = [];
     $scope.loadImages = function () {
@@ -24,32 +31,57 @@ angular.module('app.controllers', ['ti-segmented-control'])
     };
     $scope.showTop = function () {
         $scope.content = Tops.all();
-    }
+    };
     $scope.showPeople = function () {
         $scope.content = People.all();
-    }
+    };
     $scope.showTags = function () {
         $scope.content = Tags.all();
-    }
+    };
     $scope.showPlaces = function () {
         $scope.content = Places.all();
-    }
+    };
 })
 
 .controller('CameraCtrl', function ($scope) {
     $scope.showGallery = function () {
         $scope.content = "THIS IS GALLERY PAGE";
-    }
+    };
     $scope.showPhoto = function () {
         $scope.content = "THIS IS PHOTO PAGE";
-    }
+    };
     $scope.showVideo = function () {
         $scope.content = "THIS IS VIDEO PAGE";
-    }
+    };
 })
 
-.controller('LikeCtrl', function ($scope) { })
-.controller('ProfileCtrl', function ($scope) { })
+.controller('LikeCtrl', function ($scope, Friends, People) {
+    $scope.showFriend = function () {
+        $scope.content = Friends.all();
+    };
+    $scope.showFollowing = function () {
+        $scope.friends = Friends.all();
+    };
+})
+.controller('ProfileCtrl', function ($scope, PersonalInfo) {
+    $scope.profile = PersonalInfo.all();
+    $scope.content = [];
+    $scope.showGrid = function () {
+        for (var i = 0; i < 9; i++) {
+            $scope.content.push({ id: i, src: "http://placehold.it/240x240" });
+        }
+    };
+    console.log($scope.content);
+})
+.controller('DiscoverCtrl', function ($scope, People) {
+    $scope.showPeople = function () {
+        $scope.content = People.all();
+    };
+})
+.controller('OptionsCtrl', function ($scope) { })
+.controller('EditCtrl', function ($scope, PersonalInfo) {
+    $scope.profile = PersonalInfo.all();
+})
 
 .controller('ChatsCtrl', function ($scope, Chats) {
     $scope.chats = Chats.all();
@@ -61,3 +93,5 @@ angular.module('app.controllers', ['ti-segmented-control'])
 .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
     $scope.chat = Chats.get($stateParams.chatId);
 });
+
+
