@@ -7,3 +7,9 @@
 .full-width {
   width: 100%;
 }
+.camera_btn {
+    white-space: nowrap;
+overflow: visible;
+padding: 0;
+
+}

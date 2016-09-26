@@ -1,14 +1,7 @@
-angular.module('app.controllers', [])
+angular.module('app.controllers', ['ti-segmented-control'])
 
 .controller('HomeCtrl', function ($scope) { })
 .controller('ExploreCtrl', function ($scope) {
-    $scope.back = function () {
-        ;
-    };
-
-    $scope.clearSearch = function () {
-        $scope.search = '';
-    };
     $scope.images = [];
     $scope.loadImages = function () {
         for (var i = 0; i < 9; i++) {
@@ -25,9 +18,35 @@ angular.module('app.controllers', [])
     };
     
 })
-.controller('CameraCtrl', function ($scope) {
+.controller('SearchCtrl', function ($scope, Tops, People, Tags, Places) {
+    $scope.clearSearch = function () {
+        $scope.search = '';
+    };
+    $scope.showTop = function () {
+        $scope.content = Tops.all();
+    }
+    $scope.showPeople = function () {
+        $scope.content = People.all();
+    }
+    $scope.showTags = function () {
+        $scope.content = Tags.all();
+    }
+    $scope.showPlaces = function () {
+        $scope.content = Places.all();
+    }
 })
 
+.controller('CameraCtrl', function ($scope) {
+    $scope.showGallery = function () {
+        $scope.content = "THIS IS GALLERY PAGE";
+    }
+    $scope.showPhoto = function () {
+        $scope.content = "THIS IS PHOTO PAGE";
+    }
+    $scope.showVideo = function () {
+        $scope.content = "THIS IS VIDEO PAGE";
+    }
+})
 
 .controller('LikeCtrl', function ($scope) { })
 .controller('ProfileCtrl', function ($scope) { })

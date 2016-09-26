@@ -1,4 +1,4 @@
-angular.module('app', ['ionic', 'app.controllers', 'app.services'])
+angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented-control'])
 .config(function ($ionicConfigProvider) {
     $ionicConfigProvider.tabs.position('bottom');
 })
@@ -48,6 +48,15 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
             }
         }
     })
+    .state('tab.chat-detail', {
+        url: '/chats/:chatId',
+        views: {
+            'tab-home': {
+                templateUrl: 'templates/chat-detail.html',
+                controller: 'ChatDetailCtrl'
+            }
+        }
+    })
 
     .state('tab.explore', {
         url: '/explore',
@@ -58,12 +67,11 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
             }
         }
     })
-
     .state('tab.search', {
         url: '/search',
-        view: {
+        views: {
             'tab-explore': {
-                templateURL: 'templates/tab-search.html',
+                templateUrl: 'templates/tab-search.html',
                 controller: 'SearchCtrl'
             }
         }
