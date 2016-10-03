@@ -6,7 +6,7 @@
         <a class="button button-clear icon ion-android-person-add" href="#/tab/discover"></a>
         <a class="button button-clear icon ion-android-more-vertical" href="#/tab/options" style="width:2rem"></a>
     </ion-nav-buttons>
-    <ion-content ng-init="showGrid()" class="has-header" nav-direction="enter">
+    <ion-content ng-init="showGrid()" class="has-header has-tabs">
         <div class="row">
             <div class="col col-33 item-avatar profile-avatar">
                 <img ng-src="{{profile.avatar}}" />
@@ -37,22 +37,57 @@
             <b>{{profile.nickname}}</b>
         </div>
         <hr />
-        <div class="button-bar">
-            <a class="button button-positive icon ion-grid active" href="#/tab/profile"></a>
-            <a class="button button-positive icon ion-navicon" href="#/tab/profile1"></a>
-            <a class="button button-positive icon ion-location" href="#/tab/profile2"></a>
-            <a class="button button-positive icon ion-ios-pricetags" href="#/tab/profile3"></a>
+        <div class="tabs tabs-light" style="position:inherit">
+            <a class="button button-positive tab-item icon ion-grid active" ng-click="showGrid()" ng-class="{active: tabs.grid == true }"></a>
+            <a class="button button-positive tab-item icon ion-navicon" ng-click="showRow()" ng-class="{active: tabs.row == true }"></a>
+            <a class="button button-positive tab-item icon ion-location" ng-click="showPlace()" ng-class="{active: tabs.place == true }"></a>
+            <a class="button button-positive tab-item icon ion-ios-pricetags" ng-click="showTag()" ng-class="{active: tabs.tag == true }"></a>
         </div>
-        <div class="row" ng-repeat="image in grid_images" ng-if="$index % 3 === 0">
-            <div class="col col-33" ng-if="$index < grid_images.length">
-                <img ng-src="{{grid_images[$index].src}}" width="100%" />
+        <div ng-if="tabs.grid">
+            <div class="row" ng-repeat="image in grid_images" ng-if="$index % 3 === 0">
+                <div class="col col-33" ng-if="$index < grid_images.length">
+                    <img ng-src="{{grid_images[$index].src}}" width="100%" />
+                </div>
+                <div class="col col-33" ng-if="$index + 1 < grid_images.length">
+                    <img ng-src="{{grid_images[$index + 1].src}}" width="100%" />
+                </div>
+                <div class="col col-33" ng-if="$index + 2 < grid_images.length">
+                    <img ng-src="{{grid_images[$index + 2].src}}" width="100%" />
+                </div>
             </div>
-            <div class="col col-33" ng-if="$index + 1 < grid_images.length">
-                <img ng-src="{{grid_images[$index + 1].src}}" width="100%" />
-            </div>
-            <div class="col col-33" ng-if="$index + 2 < grid_images.length">
-                <img ng-src="{{grid_images[$index + 2].src}}" width="100%" />
-            </div>
+        </div>
+        <div ng-if="tabs.row">
+            <span ng-repeat="i in [0,1,2]">
+                <div class="list card">
+                    <div class="item item-avatar item-button-right">
+                        <img src="img/ben.png">
+                        <h2 class="padding-top">Abc</h2>
+                        <a class="button button-icon icon ion-android-more-vertical"></a>
+                    </div>
+
+                    <div class="item item-image">
+                        <img src="img/ben.png">
+                    </div>
+                    <div>
+                        <a class="button button-icon icon ion-ios-heart-outline"></a>
+                        <a class="button button-icon icon ion-ios-chatbubble-outline"></a>
+                        <a class="button button-icon icon ion-ios-redo-outline"></a>
+                    </div>
+
+                    <div class="" item item-text-wrap">
+                        <p>
+                            <b>Nhan </b>heheh<br>
+                            <b>Khuong </b>heheh
+                        </p>
+                    </div>
+                </div>
+            </span>
+        </div>
+        <div ng-if="tabs.place">
+            <h1>THIS IS LOCATION TAB</h1>
+        </div>
+        <div ng-if="tabs.tag">
+            <h1>THIS IS TAG TAB</h1>
         </div>
     </ion-content>
 </ion-view>

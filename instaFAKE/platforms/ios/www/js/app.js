@@ -1,4 +1,4 @@
-angular.module('app', ['ionic', 'app.controllers', 'app.services'])
+angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented-control', 'ngCordova'])
 .config(function ($ionicConfigProvider) {
     $ionicConfigProvider.tabs.position('bottom');
 })
@@ -67,12 +67,39 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
             }
         }
     })
+    .state('tab.search', {
+        url: '/search',
+        views: {
+            'tab-explore': {
+                templateUrl: 'templates/tab-search.html',
+                controller: 'SearchCtrl'
+            }
+        }
+    })
 
     .state('tab.camera', {
         url: '/camera',
         views: {
             'tab-camera': {
                 templateUrl: 'templates/tab-camera.html',
+                controller: 'GalleryCtrl'
+            }
+        }
+    })
+    .state('tab.camera1', {
+        url: '/camera1',
+        views: {
+            'tab-camera': {
+                templateUrl: 'templates/tab-camera1.html',
+                controller: 'CameraCtrl'
+            }
+        }
+    })
+    .state('tab.camera2', {
+        url: '/camera2',
+        views: {
+            'tab-camera': {
+                templateUrl: 'templates/tab-camera2.html',
                 controller: 'CameraCtrl'
             }
         }
@@ -87,6 +114,15 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
             }
         }
     })
+    .state('tab.like1', {
+        url: '/like1',
+        views: {
+            'tab-like': {
+                templateUrl: 'templates/tab-like1.html',
+                controller: 'LikeCtrl'
+            }
+        }
+    })
 
     .state('tab.profile', {
         url: '/profile',
@@ -94,6 +130,60 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services'])
             'tab-profile': {
                 templateUrl: 'templates/tab-profile.html',
                 controller: 'ProfileCtrl'
+            }
+        }
+    })
+    .state('tab.profile1', {
+        url: '/profile1',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/tab-profile1.html',
+                controller: 'ProfileCtrl'
+            }
+        }
+    })
+    .state('tab.profile2', {
+        url: '/profile2',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/tab-profile2.html',
+                controller: 'ProfileCtrl'
+            }
+        }
+    })
+    .state('tab.profile3', {
+        url: '/profile3',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/tab-profile3.html',
+                controller: 'ProfileCtrl'
+            }
+        }
+    })
+    .state('tab.discover', {
+        url: '/discover',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/profile-discover.html',
+                controller: 'DiscoverCtrl'
+            }
+        }
+    })
+    .state('tab.setting', {
+        url: '/options',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/profile-options.html',
+                controller: 'OptionsCtrl'
+            }
+        }
+    })
+    .state('tab.edit', {
+        url: '/edit',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/profile-edit.html',
+                controller: 'EditCtrl'
             }
         }
     });

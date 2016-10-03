@@ -2,15 +2,6 @@
 a { text-decoration:none !important; }
 .card { margin: 0 !important; }
 
-.popup-vertical-buttons .popup-buttons {
-  display: block;
-}
-.popup-vertical-buttons .popup-buttons .button{
-  text-align:left;
-  display:block;
-  min-width: 100% !important;
-}
-
 .full-width { width: 90%; }
 .profile-avatar {
     margin-bottom:3rem;

@@ -1,9 +1,41 @@
 ﻿/* Empty. Add your own CSS if you like */
-.card
-{
-     margin: 0 !important;
+a { text-decoration:none !important; }
+.card { margin: 0 !important; }
+
+.popup-vertical-buttons .popup-buttons {
+  display: block;
+}
+.popup-vertical-buttons .popup-buttons .button{
+  text-align:left;
+  display:block;
+  min-width: 100% !important;
 }
 
-.full-width {
-  width: 100%;
+.full-width { width: 90%; }
+.profile-avatar {
+    margin-bottom:3rem;
+}
+.profile-avatar > img:first-child{
+    max-width:100px;
+    max-height:100px;
+}
+.margin-content {
+    margin: 5px 20px 5px 20px;
+}
+.right {
+    margin-left:auto;
+    margin-right:0;
+}
+.center {
+    text-align:center;
+}
+.text-left { text-align:left; }
+input {
+    max-height:20px;
+    max-width:100%;
+    margin-left:40px;
+}
+
+.icon-larger {
+    font-size:25px;
 }

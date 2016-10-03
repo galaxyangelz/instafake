@@ -1,10 +1,12 @@
 ﻿<ion-view hide-nav-bar="true">
-    <div class="button-bar">
-        <a class="button button-positive" href="#/tab/like1">FOLLOWING</a>
-        <a class="button button-positive active" href="#/tab/like">YOU</a>
-    </div>
+    <ion-header-bar>
+        <span class="button-bar" nav-direction="enter">
+            <a class="button button-positive" href="#/tab/like1">FOLLOWING</a>
+            <a class="button button-positive active" href="#/tab/like">YOU</a>
+        </span>
+    </ion-header-bar>
 
-    <ion-content ng-init="showFriend()" class="has-header" overflow-scroll="false" nav-direction="enter">
+    <ion-content ng-init="showFriend()" class="has-header" overflow-scroll="false">
         <ion-list>
             <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="person in content" type="item-text-wrap">
                 <img ng-src="{{person.face}}">

@@ -1,4 +1,4 @@
-angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented-control'])
+angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented-control', 'ngCordova'])
 .config(function ($ionicConfigProvider) {
     $ionicConfigProvider.tabs.position('bottom');
 })
@@ -86,6 +86,14 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented
             }
         }
     })
+    .state('post-confirm', {
+        url: '/confirm',
+        templateUrl: 'templates/post-confirm.html',
+        controller: 'PostConfirmCtrl',
+        params: {
+            'URI': 'default',
+        }
+    })
 
     .state('tab.like', {
         url: '/like',
@@ -115,33 +123,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented
             }
         }
     })
-    .state('tab.profile1', {
-        url: '/profile1',
-        views: {
-            'tab-profile': {
-                templateUrl: 'templates/tab-profile1.html',
-                controller: 'ProfileCtrl'
-            }
-        }
-    })
-    .state('tab.profile2', {
-        url: '/profile2',
-        views: {
-            'tab-profile': {
-                templateUrl: 'templates/tab-profile2.html',
-                controller: 'ProfileCtrl'
-            }
-        }
-    })
-    .state('tab.profile3', {
-        url: '/profile3',
-        views: {
-            'tab-profile': {
-                templateUrl: 'templates/tab-profile3.html',
-                controller: 'ProfileCtrl'
-            }
-        }
-    })
+
     .state('tab.discover', {
         url: '/discover',
         views: {
@@ -151,6 +133,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented
             }
         }
     })
+
     .state('tab.setting', {
         url: '/options',
         views: {
@@ -160,6 +143,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented
             }
         }
     })
+
     .state('tab.edit', {
         url: '/edit',
         views: {

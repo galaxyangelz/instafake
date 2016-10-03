@@ -1,2 +1,58 @@
-<ion-view view-title="Profile">
+<ion-view hide-back-button="true">
+    <ion-nav-title>
+        <h4>{{profile.name}}</h4>
+    </ion-nav-title>
+    <ion-nav-buttons side="right">
+        <a class="button button-clear icon ion-android-person-add" href="#/tab/discover"></a>
+        <a class="button button-clear icon ion-android-more-vertical" href="#/tab/options" style="width:2rem"></a>
+    </ion-nav-buttons>
+    <ion-content ng-init="showGrid()" class="has-header" nav-direction="enter" overflow-scroll="false">
+        <div class="row">
+            <div class="col col-33 item-avatar profile-avatar">
+                <img ng-src="{{profile.avatar}}" />
+            </div>
+            <div class="col col-66 center">
+                <div class="row">
+                    <div class="col col-33">
+                        <b>{{profile.posts}}</b><br />
+                        <p>posts</p>
+                    </div>
+                    <div class="col col-33">
+                        <b>{{profile.followers}}</b><br />
+                        <p>followers</p>
+                    </div>
+                    <div class="col col-33">
+                        <b>{{profile.following}}</b><br />
+                        <p>following</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <a class="button bar-stable edit-button full-width" href="#/tab/edit">
+                        EDIT YOUR PROFILE
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:10px;">
+            <b>{{profile.nickname}}</b>
+        </div>
+        <hr />
+        <div class="button-bar">
+            <a class="button button-positive icon ion-grid active" href="#/tab/profile"></a>
+            <a class="button button-positive icon ion-navicon" href="#/tab/profile1"></a>
+            <a class="button button-positive icon ion-location" href="#/tab/profile2"></a>
+            <a class="button button-positive icon ion-ios-pricetags" href="#/tab/profile3"></a>
+        </div>
+        <div class="row" ng-repeat="image in grid_images" ng-if="$index % 3 === 0">
+            <div class="col col-33" ng-if="$index < grid_images.length">
+                <img ng-src="{{grid_images[$index].src}}" width="100%" />
+            </div>
+            <div class="col col-33" ng-if="$index + 1 < grid_images.length">
+                <img ng-src="{{grid_images[$index + 1].src}}" width="100%" />
+            </div>
+            <div class="col col-33" ng-if="$index + 2 < grid_images.length">
+                <img ng-src="{{grid_images[$index + 2].src}}" width="100%" />
+            </div>
+        </div>
+    </ion-content>
 </ion-view>

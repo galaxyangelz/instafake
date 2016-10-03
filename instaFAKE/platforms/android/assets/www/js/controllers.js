@@ -1,12 +1,18 @@
 angular.module('app.controllers', ['ti-segmented-control'])
 
-.controller('HomeCtrl', function ($scope, $ionicModal) {
-
-    /*$ionicModal.fromTemplateUrl('templates/modal.html', {
-        scope: $scope
-    }).then(function (modal) {
-        $scope.modal = modal;
-    });*/
+.controller('HomeCtrl', function ($scope, CaptureImages) {
+    $scope.contents = CaptureImages.all();
+    $scope.class = "ion-ios-heart-outline";
+    $scope.toggleLike = function (index) {
+        if ($scope.class === "ion-ios-heart-outline") {
+            $scope.contents[index].like++;
+            $scope.class = "ion-ios-heart";
+        }
+        else {
+            $scope.contents[index].like--;
+            $scope.class = "ion-ios-heart-outline";
+        }
+    }
 })
 .controller('ExploreCtrl', function ($scope) {
     $scope.images = [];
@@ -43,18 +49,69 @@ angular.module('app.controllers', ['ti-segmented-control'])
     };
 })
 
-.controller('CameraCtrl', function ($scope) {
-    $scope.showGallery = function () {
-        $scope.content = "THIS IS GALLERY PAGE";
-    };
-    $scope.showPhoto = function () {
-        $scope.content = "THIS IS PHOTO PAGE";
-    };
-    $scope.showVideo = function () {
-        $scope.content = "THIS IS VIDEO PAGE";
-    };
-})
+.controller('CameraCtrl', function ($scope, $state, $ionicHistory, $cordovaCamera) {
+    $scope.tabs = {
+        gallery: true,
+        photo: false
+    }
+    $scope.goBack = function () {
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+        $state.go('tab.home');
+    }
+    $scope.gallery = function () {
+        $scope.tabs.gallery = true;
+        $scope.tabs.photo = false;
+    }
+    $scope.photo = function () {
+        $scope.tabs.gallery = false;
+        $scope.tabs.photo = true;
+        $scope.takePicture = function () {
+            var options = {
+                quality: 75,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                encodingType: Camera.EncodingType.JPEG,
+                targetWidth: 350,
+                targetHeight: 350,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: false
+            };
 
+            $cordovaCamera.getPicture(options).then(function (imageData) {
+                $scope.imgURI = "data:image/jpeg;base64," + imageData;
+            }, function (err) {
+                // An error occured. Show a message to the user
+            });
+        }
+    }
+    $scope.confimPost = function () {
+        $state.go('post-confirm', { URI: $scope.imgURI });
+    }
+})
+.controller('PostConfirmCtrl', function ($scope, $state, $ionicHistory, PersonalInfo, CaptureImages, $stateParams) {
+    $scope.imgURI = $stateParams;
+    $scope.goBack = function () {
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+        $state.go('tab.camera');
+    }
+    var profile = PersonalInfo.all();
+    $scope.sharePost = function () {
+        var image = {
+            avatar: profile.avatar,
+            name: profile.name,
+            URI: imgURI,
+            like: 0,
+            comment: ""
+        }
+        CaptureImages.add(image);
+        console.log(image);
+    }
+
+})
 .controller('LikeCtrl', function ($scope, Friends, People) {
     $scope.showFriend = function () {
         $scope.content = Friends.all();
@@ -64,13 +121,42 @@ angular.module('app.controllers', ['ti-segmented-control'])
     };
 })
 .controller('ProfileCtrl', function ($scope, PersonalInfo) {
-    $scope.profile = PersonalInfo.all();
-    $scope.grid_images = [];
+    $scope.tabs = {
+        grid: true,
+        row: false,
+        place: false,
+        tag: false
+    }
     $scope.showGrid = function () {
-        for (var i = 0; i < 3; i++) {
+        $scope.tabs.grid = true;
+        $scope.tabs.row = false;
+        $scope.tabs.place = false;
+        $scope.tabs.tag = false;
+        $scope.grid_images = [];
+        for (var i = 0; i < 9; i++) {
             $scope.grid_images.push({ id: i, src: "http://placehold.it/240x240" });
         }
-    };
+    }
+    $scope.showRow = function () {
+        $scope.tabs.grid = false;
+        $scope.tabs.row = true;
+        $scope.tabs.place = false;
+        $scope.tabs.tag = false;
+    }
+    $scope.showPlace = function () {
+        $scope.tabs.grid = false;
+        $scope.tabs.row = false;
+        $scope.tabs.place = true;
+        $scope.tabs.tag = false;
+    }
+    $scope.showTag = function () {
+        $scope.tabs.grid = false;
+        $scope.tabs.row = false;
+        $scope.tabs.place = false;
+        $scope.tabs.tag = true;
+    }
+
+    $scope.profile = PersonalInfo.all();
 })
 .controller('DiscoverCtrl', function ($scope, People) {
     $scope.showPeople = function () {

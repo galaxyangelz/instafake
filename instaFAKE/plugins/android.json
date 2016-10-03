@@ -24,7 +24,17 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "io.cordova.myapp04389c"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "io.cordova.myapp04389c"
+        },
+        "cordova-plugin-image-picker": {
+            "PACKAGE_NAME": "io.cordova.myapp04389c"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "io.cordova.myapp04389c"
+        }
+    }
 }

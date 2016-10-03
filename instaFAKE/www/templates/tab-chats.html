@@ -2,7 +2,7 @@
     <ion-nav-buttons class="has-header" side="right">
         <a class="button button-clear icon ion-android-add" href="#"></a>
     </ion-nav-buttons>
-    <ion-content>
+    <ion-content overflow-scroll="false">
         <ion-list>
             <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
                 <img ng-src="{{chat.face}}">
