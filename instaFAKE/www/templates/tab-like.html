@@ -1,16 +1,23 @@
 ﻿<ion-view hide-nav-bar="true">
     <ion-header-bar>
         <span class="button-bar" nav-direction="enter">
-            <a class="button button-positive" href="#/tab/like1">FOLLOWING</a>
-            <a class="button button-positive active" href="#/tab/like">YOU</a>
+            <a class="button button-positive" ng-class="{active: tabs.following == true }" ng-click="showFollowing()">FOLLOWING</a>
+            <a class="button button-positive" ng-class="{active: tabs.friend == true }" ng-click="showFriend()">YOU</a>
         </span>
     </ion-header-bar>
 
-    <ion-content ng-init="showFriend()" class="has-header" overflow-scroll="false">
-        <ion-list>
-            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="person in content" type="item-text-wrap">
-                <img ng-src="{{person.face}}">
-                <p>{{person.name}} {{person.description}}</p>
+    <ion-content class="has-header" ng-init="showFriend()" overflow-scroll="false">
+        <ion-list ng-if="tabs.following">
+            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="following in content" type="item-text-wrap">
+                <img ng-src="{{following.face}}">
+                <p>{{following.name}} {{following.description}}</p>
+                <button class="button icon ion-android-person-add" href="#"></button>
+            </ion-item>
+        </ion-list>
+        <ion-list ng-if="tabs.friend">
+            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="friend in content" type="item-text-wrap">
+                <img ng-src="{{friend.face}}">
+                <p>{{friend.name}} {{friend.description}}</p>
                 <button class="button icon ion-android-person-add" href="#"></button>
             </ion-item>
         </ion-list>

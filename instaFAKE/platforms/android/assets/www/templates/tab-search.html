@@ -1,48 +1,40 @@
 ﻿<ion-view hide-nav-bar="true">
-    <ion-header-bar class="bar">
-        <button ng-click="$ionicGoBack()" class="button button-icon ion-arrow-left-c"></button>
-        <input type="search"
-                placeholder="Search"
-                ng-model="search"
-                ng-change="scrollTop()"
-                class="full-width">
-        <button ng-if="search.length"
-                class="button button-icon ion-android-close input-button"
-                ng-click="clearSearch()"></button>
+    <ion-header-bar align-title="left">
+        <div class="buttons">
+            <button class="button button-icon ion-ios-arrow-back" ng-click="goBack()"></button>
+        </div>
+        <label class="item-input-wrapper">
+            <input type="search" placeholder="Search" class="headerInput" ng-model="input.searchText" ng-change="updateSearch()">
+        </label>
+        <button class="button button-icon ion-ios-close-empty" ng-click="emptySearch()"></button>
     </ion-header-bar>
-    <div class="bar bar-subheader">
-        <ti-segmented-control on-select="buttonClicked($index)" class="full-width">
-            <ti-segmented-control-button ng-click="type=top;showTop();" class="button-positive" title="'TOP'" selected></ti-segmented-control-button>
-            <ti-segmented-control-button ng-click="type=people;showPeople()" class="button-positive" title="'PEOPLE'"></ti-segmented-control-button>
-            <ti-segmented-control-button ng-click="type=tags;showTags()" class="button-positive" title="'TAGS'"></ti-segmented-control-button>
-            <ti-segmented-control-button ng-click="type=places;showPlaces()" class="button-positive" title="'PLACES'"></ti-segmented-control-button>
-        </ti-segmented-control>
-    </div>
-    <ion-content ng-init="showTop()" ng-switch on="type" class="has-header has-subheader" overflow-scroll="false">
-        <ion-list ng-switch-default>
-            <ion-item class="item-avatar item-icon-right" ng-repeat="top in content" type="item-text-wrap">
-                <img ng-src="{{top.face}}">
-                <h2>{{top.name}}</h2>
-                <p>{{top.description}}</p>
-            </ion-item>
-        </ion-list>
-        <ion-list ng-switch-when="people">
-            <ion-item class="item-avatar item-icon-right" ng-repeat="person in content" type="item-text-wrap">
-                <img ng-src="{{person.face}}">
-                <h2>{{person.name}}</h2>
-                <p>{{person.description}}</p>
-            </ion-item>
-        </ion-list>
-        <ion-list ng-switch-when="tags">
-            <ion-item class="item-avatar item-icon-right" ng-repeat="tag in content" type="item-text-wrap">
-                <h2>{{tag.name}}</h2>
-            </ion-item>
-        </ion-list>
-        <ion-list ng-switch-when="places">
-            <ion-item class="item-avatar item-icon-right" ng-repeat="place in content" type="item-text-wrap">
-                <h2>{{place.name}}</h2>
-                <p>{{place.description}}</p>
-            </ion-item>
-        </ion-list>
+    <ion-content class="has-header has-tabs">
+        <div class="tabs tabs-top custom-tabs-top">
+            <a class="tab-item" ng-class="{active: tabs.people == true }" ng-click="tabActivate('people')">
+                People
+            </a>
+            <a class="tab-item" ng-class="{active: tabs.tags == true }" ng-click="tabActivate('tags')">
+                Tags
+            </a>
+        </div>
+        <div ng-if="tabs.people">
+            <div class="list">
+                <a class="item item-avatar" href="#" ng-repeat="p in searchResults.people">
+                    <img src="{{ p.profileImageSmall }}">
+                    <h2>{{ p.username }}</h2>
+                    <p>{{ p.fullName }}</p>
+                </a>
+
+            </div>
+        </div>
+        <div ng-if="tabs.tags">
+            <div class="list">
+                <a class="item item-avatar" href="#">
+                    <i class="icon ion-pound"></i>
+                    <h2>#tupac</h2>
+                    <p>87,345 posts</p>
+                </a>
+            </div>
+        </div>
     </ion-content>
 </ion-view>

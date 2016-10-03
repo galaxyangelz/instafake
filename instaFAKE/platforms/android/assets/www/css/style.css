@@ -30,3 +30,13 @@ input {
 .icon-larger {
     font-size:25px;
 }
+.headerInput
+{
+    background-color: transparent;
+    width: 100%;
+}
+
+.tabs.tabs-top.custom-tabs-top
+{
+    position: initial;
+}

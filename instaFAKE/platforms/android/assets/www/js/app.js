@@ -1,4 +1,4 @@
-angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented-control', 'ngCordova'])
+angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova'])
 .config(function ($ionicConfigProvider) {
     $ionicConfigProvider.tabs.position('bottom');
 })
@@ -35,6 +35,15 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented
             'tab-home': {
                 templateUrl: 'templates/tab-home.html',
                 controller: 'HomeCtrl'
+            }
+        }
+    })
+    .state('tab.comment', {
+        url: '/comment/:postId',
+        views: {
+            'tab-home': {
+                templateUrl: 'templates/comment.html',
+                controller: 'CommentCtrl'
             }
         }
     })
@@ -100,15 +109,6 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented
         views: {
             'tab-like': {
                 templateUrl: 'templates/tab-like.html',
-                controller: 'LikeCtrl'
-            }
-        }
-    })
-    .state('tab.like1', {
-        url: '/like1',
-        views: {
-            'tab-like': {
-                templateUrl: 'templates/tab-like1.html',
                 controller: 'LikeCtrl'
             }
         }

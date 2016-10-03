@@ -199,6 +199,7 @@ angular.module('app.services', [])
 })
 .factory('PersonalInfo', function () {
     var Info = {
+        id:111111,
         avatar: "https://pbs.twimg.com/profile_images/653312117886447616/szRCKaD_.jpg",
         name: "Whatever",
         nickname: "Anyway",

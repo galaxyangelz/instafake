@@ -1,17 +1,51 @@
-angular.module('app.controllers', ['ti-segmented-control'])
+angular.module('app.controllers', [])
 
-.controller('HomeCtrl', function ($scope, CaptureImages) {
-    $scope.contents = CaptureImages.all();
+.controller('HomeCtrl', function ($scope, Posts) {
+    Posts.following().then(function (data) {
+        $scope.posts = data;
+        }
+    );
     $scope.class = "ion-ios-heart-outline";
     $scope.toggleLike = function (index) {
         if ($scope.class === "ion-ios-heart-outline") {
-            $scope.contents[index].like++;
+            $scope.posts[index].likes++;
             $scope.class = "ion-ios-heart";
         }
         else {
-            $scope.contents[index].like--;
+            $scope.posts[index].likes--;
             $scope.class = "ion-ios-heart-outline";
         }
+    }
+})
+.controller('CommentCtrl', function ($scope, $stateParams, $state, $ionicHistory, Posts) {
+    $scope.post = Posts.get($stateParams.postId);
+
+    $scope.goBack = function () {
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+        $state.go('tab.home');
+    }
+
+    $scope.master = {};
+    var posts = Posts.all();
+    $scope.addComment = function (mycomment) {
+        $scope.master = angular.copy(mycomment);
+        var comments = Posts.get($stateParams.postId).comments;
+        console.log(comments);
+        var new_comment = {
+            id: comments.length + 1,
+            user: {
+                id: 111111,
+                username: "Anyway",
+            },
+            comment: $scope.master,
+            userRefs: [],
+            tags: []
+        }
+        Posts.get($stateParams.postId).comments.push(new_comment);
+        console.log(Posts.get($stateParams.postId).comments);
+        $state.reload();
     }
 })
 .controller('ExploreCtrl', function ($scope) {
@@ -31,22 +65,45 @@ angular.module('app.controllers', ['ti-segmented-control'])
     };
     
 })
-.controller('SearchCtrl', function ($scope, Tops, People, Tags, Places) {
-    $scope.clearSearch = function () {
-        $scope.search = '';
+.controller('SearchCtrl', function ($scope, $state, $ionicHistory, Users) {
+    $scope.input = {
+        searchText: ""
     };
-    $scope.showTop = function () {
-        $scope.content = Tops.all();
-    };
-    $scope.showPeople = function () {
-        $scope.content = People.all();
-    };
-    $scope.showTags = function () {
-        $scope.content = Tags.all();
-    };
-    $scope.showPlaces = function () {
-        $scope.content = Places.all();
-    };
+    $scope.searchResults = {
+        people: [],
+        tags: []
+    }
+    $scope.tabs = {
+        people: true,
+        tags: false
+    }
+    $scope.goBack = function () {
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+        $state.go('tab.explore');
+    }
+    $scope.emptySearch = function () {
+        $scope.input.searchText = "";
+    }
+    $scope.tabActivate = function (tab) {
+        for (var k in $scope.tabs) {
+            if ($scope.tabs.hasOwnProperty(k)) {
+                $scope.tabs[k] = false;
+            }
+        }
+        $scope.tabs[tab] = true;
+    }
+    $scope.updateSearch = function () {
+        if ($scope.tabs.people == true) {
+            Users.searchUser($scope.input.searchText).then(function (result) {
+                $scope.searchResults.people = result;
+            });
+        }
+        else // search for posts with tags
+        {
+        }
+    }
 })
 
 .controller('CameraCtrl', function ($scope, $state, $ionicHistory, $cordovaCamera) {
@@ -113,11 +170,19 @@ angular.module('app.controllers', ['ti-segmented-control'])
 
 })
 .controller('LikeCtrl', function ($scope, Friends, People) {
+    $scope.tabs = {
+        friend: true,
+        following: false
+    }
     $scope.showFriend = function () {
+        $scope.tabs.friend = true;
+        $scope.tabs.following = false;
         $scope.content = Friends.all();
     };
     $scope.showFollowing = function () {
-        $scope.following = People.all();
+        $scope.tabs.friend = false;
+        $scope.tabs.following = true;
+        $scope.content = People.all();
     };
 })
 .controller('ProfileCtrl', function ($scope, PersonalInfo) {
