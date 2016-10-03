@@ -13,7 +13,7 @@
                 <img ng-src="{{post.image}}">
             </div>
             <div>
-                <a class="button button-icon icon" ng-class="class" ng-click="toggleLike({{$index}})"></a>
+                <a class="button button-icon icon" ng-class="{'ion-ios-heart': post.isliked, 'ion-ios-heart-outline': !post.isliked}" ng-click="toggleLike(post, $event)"></a>
                 <a class="button button-icon icon ion-ios-chatbubble-outline" href="#/tab/comment/{{post.id}}"></a>
                 <a class="button button-icon icon ion-ios-redo-outline"></a>
             </div>

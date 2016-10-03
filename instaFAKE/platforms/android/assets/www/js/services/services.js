@@ -218,20 +218,3 @@ angular.module('app.services', [])
         }
     };
 })
-.factory('CaptureImages', function () {
-    var Images = [{
-        avatar: "img/ben.png",
-        name: "Ben",
-        URI: "http://placehold.it/350x350",
-        like: 10,
-        comment: "This is a comment",
-    }];
-    return {
-        all: function () {
-            return Images;
-        },
-        add: function (image) {
-            Images.push(image);
-        }
-    }
-})

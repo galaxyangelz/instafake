@@ -1,9 +1,12 @@
-﻿<ion-view view-title="Account">
+﻿<ion-view view-title="Confirm">
+    <ion-header-bar align-title="left">
+        <div class="buttons">
+            <button class="button button-icon ion-ios-close-empty" ng-click="goBack()">  Photo</button>
+        </div>
+    </ion-header-bar>
     <ion-content class="has-header" overflow-scroll="false">
         <ion-list>
-            <ion-toggle ng-model="settings.enableFriends">
-                Enable Friends
-            </ion-toggle>
+            <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}" style="text-align: center">
         </ion-list>
     </ion-content>
 </ion-view>

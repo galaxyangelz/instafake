@@ -1,20 +1,21 @@
-angular.module('app.controllers', [])
+angular.module('app.controllers', ['ngCordova'])
 
 .controller('HomeCtrl', function ($scope, Posts) {
     Posts.following().then(function (data) {
         $scope.posts = data;
         }
     );
-    $scope.class = "ion-ios-heart-outline";
-    $scope.toggleLike = function (index) {
-        if ($scope.class === "ion-ios-heart-outline") {
-            $scope.posts[index].likes++;
-            $scope.class = "ion-ios-heart";
+
+    $scope.toggleLike = function (post, $event) {
+        post.isliked = !post.isliked;
+        if (post.isliked) {
+            post.likes++;
         }
         else {
-            $scope.posts[index].likes--;
-            $scope.class = "ion-ios-heart-outline";
+            post.likes--;
         }
+        $event.stopPropagation();
+        $event.preventDefault();
     }
 })
 .controller('CommentCtrl', function ($scope, $stateParams, $state, $ionicHistory, Posts) {
@@ -117,21 +118,42 @@ angular.module('app.controllers', [])
         });
         $state.go('tab.home');
     }
+    $scope.imgURI = '';
     $scope.gallery = function () {
         $scope.tabs.gallery = true;
         $scope.tabs.photo = false;
+        $scope.choosePhoto = function () {
+            var options = {
+                quality: 75,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                allowEdit: true,
+                encodingType: Camera.EncodingType.JPEG,
+                targetWidth: 300,
+                targetHeight: 300,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: false
+            };
+
+            $cordovaCamera.getPicture(options).then(function (imageData) {
+                $scope.imgURI = "data:image/jpeg;base64," + imageData;
+            }, function (err) {
+                // An error occured. Show a message to the user
+            });
+        }
     }
     $scope.photo = function () {
         $scope.tabs.gallery = false;
         $scope.tabs.photo = true;
-        $scope.takePicture = function () {
+        $scope.takePhoto = function () {
             var options = {
                 quality: 75,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.CAMERA,
+                allowEdit: true,
                 encodingType: Camera.EncodingType.JPEG,
-                targetWidth: 350,
-                targetHeight: 350,
+                targetWidth: 300,
+                targetHeight: 300,
                 popoverOptions: CameraPopoverOptions,
                 saveToPhotoAlbum: false
             };
@@ -144,23 +166,25 @@ angular.module('app.controllers', [])
         }
     }
     $scope.confimPost = function () {
-        $state.go('post-confirm', { URI: $scope.imgURI });
+        console.log()
+        $state.go('post-confirm', { 'URI': $scope.imgURI });
     }
 })
 .controller('PostConfirmCtrl', function ($scope, $state, $ionicHistory, PersonalInfo, CaptureImages, $stateParams) {
-    $scope.imgURI = $stateParams;
     $scope.goBack = function () {
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
         $state.go('tab.camera');
     }
+
+    var chosenPhoto = $stateParams;
     var profile = PersonalInfo.all();
     $scope.sharePost = function () {
         var image = {
             avatar: profile.avatar,
             name: profile.name,
-            URI: imgURI,
+            URI: chosenPhoto,
             like: 0,
             comment: ""
         }
@@ -169,6 +193,7 @@ angular.module('app.controllers', [])
     }
 
 })
+
 .controller('LikeCtrl', function ($scope, Friends, People) {
     $scope.tabs = {
         friend: true,
