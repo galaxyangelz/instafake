@@ -6,15 +6,16 @@
     </ion-header-bar>
     <ion-content class="has-header">
         <div>
-            <p ng-repeat="c in post.comments">
-                <b>{{c.user.username}}</b> {{c.comment}}
+            <p ng-repeat="comment in post.comments">
+                <b>{{comment.user.username}}</b> {{comment.comment}}
             </p>
         </div>
-        <div class="row">
-            <form class="item-input-wrapper">
-                <input type="text" placeholder="Add a comment..." class="headerInput" ng-model="mycomment" name="mycomment">
-                <input type="submit" id="submit" value="Submit" ng-click="addComment(mycomment)"/>
-            </form>
-        </div>
+        <form>
+            <label class="item item-input item-text-wrap">
+                <input type="text" placeholder="Add a comment..." ng-model="mycomment" name="mycomment">
+                <button class="button button-icon ion-ios-close-empty" ng-click="emptyComment()"></button>
+            </label>
+            <input type="submit" id="submit" value="Submit" class="button button-positive" ng-click="addComment(mycomment)"/>
+        </form>
     </ion-content>
 </ion-view>

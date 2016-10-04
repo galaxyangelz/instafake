@@ -1,11 +1,11 @@
 angular.module('app.controllers', ['ngCordova'])
 
+/*THIS IS LOCAL DATABASE CONTROLLER*/
 .controller('HomeCtrl', function ($scope, Posts) {
     Posts.following().then(function (data) {
         $scope.posts = data;
         }
     );
-
     $scope.toggleLike = function (post, $event) {
         post.isliked = !post.isliked;
         if (post.isliked) {
@@ -18,6 +18,23 @@ angular.module('app.controllers', ['ngCordova'])
         $event.preventDefault();
     }
 })
+/*THIS IS SERVER DATABASE CONTROLLER
+.controller('HomeCtrl', function ($scope, PostsAPI) {
+    PostsAPI.all().then(function (data) {
+        $scope.posts = data;
+    });
+    $scope.toggleLike = function (post, $event) {
+        post.isliked = !post.isliked;
+        if (post.isliked) {
+            post.likes++;
+        }
+        else {
+            post.likes--;
+        }
+        $event.stopPropagation();
+        $event.preventDefault();
+    }
+})*/
 .controller('CommentCtrl', function ($scope, $stateParams, $state, $ionicHistory, Posts) {
     $scope.post = Posts.get($stateParams.postId);
 
@@ -64,7 +81,7 @@ angular.module('app.controllers', ['ngCordova'])
             $scope.$broadcast('scroll.infiniteScrollComplete');
         }
     };
-    
+
 })
 .controller('SearchCtrl', function ($scope, $state, $ionicHistory, Users) {
     $scope.input = {
@@ -107,7 +124,7 @@ angular.module('app.controllers', ['ngCordova'])
     }
 })
 
-.controller('CameraCtrl', function ($scope, $state, $ionicHistory, $cordovaCamera) {
+.controller('CameraCtrl', function ($scope, $rootScope, $state, $ionicHistory, $cordovaCamera) {
     $scope.tabs = {
         gallery: true,
         photo: false
@@ -118,59 +135,58 @@ angular.module('app.controllers', ['ngCordova'])
         });
         $state.go('tab.home');
     }
-    $scope.imgURI = '';
     $scope.gallery = function () {
         $scope.tabs.gallery = true;
         $scope.tabs.photo = false;
-        $scope.choosePhoto = function () {
-            var options = {
-                quality: 75,
-                destinationType: Camera.DestinationType.DATA_URL,
-                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                allowEdit: true,
-                encodingType: Camera.EncodingType.JPEG,
-                targetWidth: 300,
-                targetHeight: 300,
-                popoverOptions: CameraPopoverOptions,
-                saveToPhotoAlbum: false
-            };
-
-            $cordovaCamera.getPicture(options).then(function (imageData) {
-                $scope.imgURI = "data:image/jpeg;base64," + imageData;
-            }, function (err) {
-                // An error occured. Show a message to the user
-            });
-        }
     }
+    $scope.choosePhoto = function () {
+        var options = {
+            quality: 100,
+            destinationType: Camera.DestinationType.FILE_URI,
+            sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 300,
+            targetHeight: 300,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function (imageData) {
+            $rootScope.imgURI = imageData;
+        }, function (err) {
+            // An error occured. Show a message to the user
+        });
+    }
+    
     $scope.photo = function () {
         $scope.tabs.gallery = false;
         $scope.tabs.photo = true;
-        $scope.takePhoto = function () {
-            var options = {
-                quality: 75,
-                destinationType: Camera.DestinationType.DATA_URL,
-                sourceType: Camera.PictureSourceType.CAMERA,
-                allowEdit: true,
-                encodingType: Camera.EncodingType.JPEG,
-                targetWidth: 300,
-                targetHeight: 300,
-                popoverOptions: CameraPopoverOptions,
-                saveToPhotoAlbum: false
-            };
-
-            $cordovaCamera.getPicture(options).then(function (imageData) {
-                $scope.imgURI = "data:image/jpeg;base64," + imageData;
-            }, function (err) {
-                // An error occured. Show a message to the user
-            });
-        }
     }
+    $scope.takePhoto = function () {
+        var options = {
+            quality: 100,
+            destinationType: Camera.DestinationType.FILE_URI,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            encodingType: Camera.EncodingType.JPEG,
+            allowEdit: true,
+            targetWidth: 300,
+            targetHeight: 300,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: true
+        };
+
+        $cordovaCamera.getPicture(options).then(function (imageData) {
+            $rootScope.imgURI = imageData;
+        }, function (err) {
+            // An error occured. Show a message to the user
+        });
+    }
+    
     $scope.confimPost = function () {
-        console.log()
-        $state.go('post-confirm', { 'URI': $scope.imgURI });
+        $state.go('post-confirm');
     }
 })
-.controller('PostConfirmCtrl', function ($scope, $state, $ionicHistory, PersonalInfo, CaptureImages, $stateParams) {
+.controller('PostConfirmCtrl', function ($scope, $rootScope, $state, $ionicHistory, PersonalInfo, Posts) {
     $scope.goBack = function () {
         $ionicHistory.nextViewOptions({
             disableBack: true
@@ -178,18 +194,25 @@ angular.module('app.controllers', ['ngCordova'])
         $state.go('tab.camera');
     }
 
-    var chosenPhoto = $stateParams;
     var profile = PersonalInfo.all();
-    $scope.sharePost = function () {
-        var image = {
-            avatar: profile.avatar,
-            name: profile.name,
-            URI: chosenPhoto,
-            like: 0,
-            comment: ""
-        }
-        CaptureImages.add(image);
-        console.log(image);
+    var posts = Posts.all();
+    $scope.master = {};
+    $scope.confirmPost = function (caption) {
+        console.log(profile);
+        $scope.master = angular.copy(caption);
+        Posts.add({
+            id: posts.length+1,
+            user: {
+                id: profile.id,
+                username: profile.name,
+                profileImageSmall: profile.avatar
+            },
+            image: $rootScope.imgURI,
+            likes: 0,
+            caption: $scope.master,
+            comments: []
+        });
+        $state.go('tab.home');
     }
 
 })
@@ -268,4 +291,3 @@ angular.module('app.controllers', ['ngCordova'])
 .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
     $scope.chat = Chats.get($stateParams.chatId);
 });
-

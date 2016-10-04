@@ -50,7 +50,7 @@
             caption: "Always lost #elections",
             tags: ['elections'],
             comments: [
-                /*{
+                {
                     id: 0,
                     user: {
                         id: 3,
@@ -59,7 +59,7 @@
                     comment: "Right",
                     userRefs: [],
                     tags: []
-                }*/
+                }
             ]
         }
     ]
@@ -67,6 +67,9 @@
     return {
         all: function() {
             return posts;
+        },
+        add: function(newData) {
+            posts.push(newData);
         },
         // posts from myself and the from the users i am following
         following: function () {
