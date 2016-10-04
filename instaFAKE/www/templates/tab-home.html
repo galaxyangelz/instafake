@@ -31,7 +31,33 @@
                 </p>
             </div>
         </div>
-        </div>
+        <div class="list card zeromargin" ng-repeat="post in postsAPI | orderBy:'id':true">
+            <div class="item item-avatar">
+                <img ng-src="{{ post.user.profileImageSmall }}">
+                <h2 style="margin-top: 8px;">{{ post.user.username }}</h2>
+            </div>
+
+            <div class="item item-image">
+                <img ng-src="{{post.image}}">
+            </div>
+            <div>
+                <a class="button button-icon icon" ng-class="{'ion-ios-heart': post.isliked, 'ion-ios-heart-outline': !post.isliked}" ng-click="toggleLike(post, $event)"></a>
+                <a class="button button-icon icon ion-ios-chatbubble-outline" href="#/tab/comment/{{post.id}}"></a>
+                <a class="button button-icon icon ion-ios-redo-outline"></a>
+            </div>
+
+            <div>
+                <span class="row">
+                    <i class="ion-ios-heart"></i>
+                    <p>{{post.likes}}</p>
+                </span>
+                <p>
+                    <b>{{post.user.username}}</b> {{post.caption}}
+                </p>
+                <p ng-repeat="c in post.comments">
+                    <b>{{c.user.username}}</b> {{c.comment}}
+                </p>
+            </div>
         </div>
     </ion-content>
 </ion-view>

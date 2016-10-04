@@ -1,6 +1,6 @@
 angular.module('app.controllers', ['ngCordova'])
 
-/*THIS IS LOCAL DATABASE CONTROLLER*/
+/*THIS IS LOCAL DATABASE CONTROLLER
 .controller('HomeCtrl', function ($scope, Posts) {
     Posts.following().then(function (data) {
         $scope.posts = data;
@@ -17,11 +17,14 @@ angular.module('app.controllers', ['ngCordova'])
         $event.stopPropagation();
         $event.preventDefault();
     }
-})
-/*THIS IS SERVER DATABASE CONTROLLER
-.controller('HomeCtrl', function ($scope, PostsAPI) {
-    PostsAPI.all().then(function (data) {
+})*/
+.controller('HomeCtrl', function ($scope, Posts, PostsAPI) {
+    Posts.following().then(function (data) {
         $scope.posts = data;
+    }
+    );
+    PostsAPI.all().then(function (data) {
+        $scope.postsAPI = data;
     });
     $scope.toggleLike = function (post, $event) {
         post.isliked = !post.isliked;
@@ -34,7 +37,7 @@ angular.module('app.controllers', ['ngCordova'])
         $event.stopPropagation();
         $event.preventDefault();
     }
-})*/
+})
 .controller('CommentCtrl', function ($scope, $stateParams, $state, $ionicHistory, Posts) {
     $scope.post = Posts.get($stateParams.postId);
 
@@ -50,7 +53,6 @@ angular.module('app.controllers', ['ngCordova'])
     $scope.addComment = function (mycomment) {
         $scope.master = angular.copy(mycomment);
         var comments = Posts.get($stateParams.postId).comments;
-        console.log(comments);
         var new_comment = {
             id: comments.length + 1,
             user: {
@@ -62,7 +64,6 @@ angular.module('app.controllers', ['ngCordova'])
             tags: []
         }
         Posts.get($stateParams.postId).comments.push(new_comment);
-        console.log(Posts.get($stateParams.postId).comments);
         $state.reload();
     }
 })
@@ -198,7 +199,6 @@ angular.module('app.controllers', ['ngCordova'])
     var posts = Posts.all();
     $scope.master = {};
     $scope.confirmPost = function (caption) {
-        console.log(profile);
         $scope.master = angular.copy(caption);
         Posts.add({
             id: posts.length+1,
@@ -233,7 +233,18 @@ angular.module('app.controllers', ['ngCordova'])
         $scope.content = People.all();
     };
 })
-.controller('ProfileCtrl', function ($scope, PersonalInfo) {
+.controller('ProfileCtrl', function ($scope, PersonalInfo, Posts) {
+    $scope.profile = PersonalInfo.all();
+    function getselfPost() {
+        $scope.data = Posts.all();
+        $scope.posts = [];
+        for (var i = 0; i < $scope.data.length; i++) {
+            if ($scope.data[i].user.id == $scope.profile.id) {
+                $scope.posts.push($scope.data[i]);
+            }
+        }
+        return $scope.posts;
+    }
     $scope.tabs = {
         grid: true,
         row: false,
@@ -245,16 +256,27 @@ angular.module('app.controllers', ['ngCordova'])
         $scope.tabs.row = false;
         $scope.tabs.place = false;
         $scope.tabs.tag = false;
-        $scope.grid_images = [];
-        for (var i = 0; i < 9; i++) {
-            $scope.grid_images.push({ id: i, src: "http://placehold.it/240x240" });
-        }
+        getselfPost();
+        console.log($scope.posts);
     }
     $scope.showRow = function () {
         $scope.tabs.grid = false;
         $scope.tabs.row = true;
         $scope.tabs.place = false;
         $scope.tabs.tag = false;
+        getselfPost();
+        console.log($scope.posts);
+        $scope.toggleLike = function (post, $event) {
+            post.isliked = !post.isliked;
+            if (post.isliked) {
+                post.likes++;
+            }
+            else {
+                post.likes--;
+            }
+            $event.stopPropagation();
+            $event.preventDefault();
+        }
     }
     $scope.showPlace = function () {
         $scope.tabs.grid = false;
@@ -269,7 +291,6 @@ angular.module('app.controllers', ['ngCordova'])
         $scope.tabs.tag = true;
     }
 
-    $scope.profile = PersonalInfo.all();
 })
 .controller('DiscoverCtrl', function ($scope, People) {
     $scope.showPeople = function () {
