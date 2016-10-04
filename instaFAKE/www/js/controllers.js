@@ -54,7 +54,7 @@ angular.module('app.controllers', ['ngCordova'])
         $scope.master = angular.copy(mycomment);
         var comments = Posts.get($stateParams.postId).comments;
         var new_comment = {
-            id: comments.length + 1,
+            id: comments.length,
             user: {
                 id: 111111,
                 username: "Anyway",
