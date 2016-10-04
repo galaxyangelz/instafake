@@ -3,7 +3,7 @@
         <a class="button button-clear icon ion-ios-filing-outline" href="#/tab/chats"></a>
     </ion-nav-buttons>
     <ion-content class="has-header" overflow-scroll="false">
-        <div class="list card zeromargin" ng-repeat="post in posts">
+        <div class="list card zeromargin" ng-repeat="post in posts | orderBy:'id':true">
             <div class="item item-avatar">
                 <img ng-src="{{ post.user.profileImageSmall }}">
                 <h2 style="margin-top: 8px;">{{ post.user.username }}</h2>
