@@ -1,5 +1,56 @@
 angular.module('app.controllers', ['ngCordova'])
 
+.controller('StartCtrl', function ($scope, Users, $ionicPopup, $ionicHistory, $state) {
+    $scope.user = {
+        username: "",
+        password: ""
+    };
+
+    $scope.signIn = function () {
+        Users.login($scope.user.username, $scope.user.password).then(function () {
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
+            $state.go('tab.home');
+        }).catch(function () {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Login fail',
+                template: 'Incorrect username or password'
+            });
+        });
+    }
+
+    $scope.signUp = function () {
+        $state.go('register');
+    }
+})
+.controller('RegisterCtrl', function ($scope, Users, $ionicPopup, $ionicHistory, $state) {
+    $scope.goBack = function () {
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+        $state.go('tab.home');
+    }
+    $scope.user = {
+        username: "",
+        password: "",
+        email: ""
+    };
+
+    $scope.registerUser = function () {
+        Users.register($scope.user.username, $scope.user.password, $scope.user.email).then(function () {
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
+            $state.go('tab.home');
+        }).catch(function () {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Username has been used',
+                template: 'Please use another username'
+            });
+        });
+    }
+})
 /*THIS IS LOCAL DATABASE CONTROLLER
 .controller('HomeCtrl', function ($scope, Posts) {
     Posts.following().then(function (data) {
@@ -201,7 +252,7 @@ angular.module('app.controllers', ['ngCordova'])
     $scope.confirmPost = function (caption) {
         $scope.master = angular.copy(caption);
         Posts.add({
-            id: posts.length+1,
+            id: posts.length,
             user: {
                 id: profile.id,
                 username: profile.name,
@@ -297,7 +348,11 @@ angular.module('app.controllers', ['ngCordova'])
         $scope.content = People.all();
     };
 })
-.controller('OptionsCtrl', function ($scope) { })
+.controller('OptionsCtrl', function ($scope, $state, Users) {
+    $scope.logout = function () {
+        $state.go("start")
+    }
+})
 .controller('EditCtrl', function ($scope, PersonalInfo) {
     $scope.profile = PersonalInfo.all();
 })

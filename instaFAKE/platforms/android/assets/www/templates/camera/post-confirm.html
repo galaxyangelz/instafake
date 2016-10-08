@@ -1,0 +1,22 @@
+﻿<ion-view hide-nav-bar="true" cache-view="false">
+    <input value="Share" type="submit" class="button button-clear button-calm" ng-click="confirmPost(caption)">
+    <ion-header-bar align-title="center">
+        <div class="buttons">
+            <button class="button button-icon ion-ios-close-empty" ng-click="goBack()"> Photo</button>
+        </div>
+        <h1 class="title">New post</h1>
+    </ion-header-bar>
+    <ion-content>
+        <center>
+            <img ng-src="{{imgURI}}" style="text-align: center">
+        </center>
+        <div>
+            <form>
+                <label class="item item-input item-text-wrap">
+                    <input type="text" placeholder="Write a caption..." ng-model="caption">
+                </label>
+                <input value="Share" type="submit" class="button button-positive " ng-click="confirmPost(caption)">
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

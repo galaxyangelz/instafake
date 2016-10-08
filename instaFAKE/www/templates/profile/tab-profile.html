@@ -1,0 +1,96 @@
+<ion-view hide-back-button="true" cache-view="false">
+    <ion-nav-title>
+        <h4>{{profile.name}}</h4>
+    </ion-nav-title>
+    <ion-nav-buttons side="right">
+        <a class="button button-clear icon ion-android-person-add" href="#/tab/discover"></a>
+        <a class="button button-clear icon ion-android-more-vertical" href="#/tab/options" style="width:2rem"></a>
+    </ion-nav-buttons>
+    <ion-content ng-init="showGrid()" class="has-header has-tabs">
+        <div class="row">
+            <div class="col col-33 item-avatar profile-avatar">
+                <img ng-src="{{profile.avatar}}" />
+            </div>
+            <div class="col col-66 center">
+                <div class="row">
+                    <div class="col col-33 abc">
+                        <b>{{profile.posts}}</b><br />
+                        <p>posts</p>
+                    </div>
+                    <div class="col col-33 abc">
+                        <b>{{profile.followers}}</b><br />
+                        <p>followers</p>
+                    </div>
+                    <div class="col col-33 abc">
+                        <b>{{profile.following}}</b><br />
+                        <p>following</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <a class="button bar-stable edit-button full-width" href="#/tab/edit">
+                        EDIT YOUR PROFILE
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:10px;">
+            <b>{{profile.nickname}}</b>
+        </div>
+        <hr />
+        <div class="tabs tabs-light" style="position:inherit">
+            <a class="button button-positive tab-item icon ion-grid active" ng-click="showGrid()" ng-class="{active: tabs.grid == true }"></a>
+            <a class="button button-positive tab-item icon ion-navicon" ng-click="showRow()" ng-class="{active: tabs.row == true }"></a>
+            <a class="button button-positive tab-item icon ion-location" ng-click="showPlace()" ng-class="{active: tabs.place == true }"></a>
+            <a class="button button-positive tab-item icon ion-ios-pricetags" ng-click="showTag()" ng-class="{active: tabs.tag == true }"></a>
+        </div>
+        <div ng-if="tabs.grid">
+            <div class="row" ng-repeat="post in posts" ng-if="$index % 3 === 0">
+                <div class="col col-33" ng-if="$index < posts.length">
+                    <img ng-src="{{posts[$index].image}}" width="100%" />
+                </div>
+                <div class="col col-33" ng-if="$index + 1 < posts.length">
+                    <img ng-src="{{posts[$index + 1].image}}" width="100%" />
+                </div>
+                <div class="col col-33" ng-if="$index + 2 < posts.length">
+                    <img ng-src="{{posts[$index + 2].image}}" width="100%" />
+                </div>
+            </div>
+        </div>
+        <div ng-if="tabs.row">
+            <div class="list card zeromargin" ng-repeat="post in posts | orderBy:'id':true">
+                <div class="item item-avatar">
+                    <img ng-src="{{ post.user.profileImageSmall }}">
+                    <h2 style="margin-top: 8px;">{{ post.user.username }}</h2>
+                </div>
+
+                <div class="item item-image">
+                    <img ng-src="{{post.image}}">
+                </div>
+                <div>
+                    <a class="button button-icon icon" ng-class="{'ion-ios-heart': post.isliked, 'ion-ios-heart-outline': !post.isliked}" ng-click="toggleLike(post, $event)"></a>
+                    <a class="button button-icon icon ion-ios-chatbubble-outline" href="#/tab/comment/{{post.id}}"></a>
+                    <a class="button button-icon icon ion-ios-redo-outline"></a>
+                </div>
+
+                <div>
+                    <span class="row">
+                        <i class="ion-ios-heart"></i>
+                        <p>{{post.likes}}</p>
+                    </span>
+                    <p>
+                        <b>{{post.user.username}}</b> {{post.caption}}
+                    </p>
+                    <p ng-repeat="c in post.comments">
+                        <b>{{c.user.username}}</b> {{c.comment}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div ng-if="tabs.place">
+            <h1>THIS IS LOCATION TAB</h1>
+        </div>
+        <div ng-if="tabs.tag">
+            <h1>THIS IS TAG TAB</h1>
+        </div>
+    </ion-content>
+</ion-view>
