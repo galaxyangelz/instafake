@@ -4,11 +4,29 @@
     var user = null;
 
     return {
+        all: function () {
+            return user;
+        },
+        edit: function (new_info) {
+            user = new_info;
+            console.log(user);
+            $http.put("https://instafake-api.herokuapp.com/edit/" + user.id, user);
+        },
         login: function (username, password) {
             return $q(function (resolve, reject) {
                 $http.post("https://instafake-api.herokuapp.com/login", { username: username, password: password }).then(function (result) {
                     if (result.status == 200) {
-                        user = { id: result.data.id, username: result.data.username };
+                        user = { 
+                            id: result.data.id, 
+                            username: result.data.username, 
+                            email: result.data.email,
+                            avatar: result.data.avatar || "",
+                            nickname: result.data.nickname || "",
+                            website: result.data.website || "",
+                            bio: result.data.bio || "",
+                            mobile: result.data.mobile || "",
+                            gender: result.data.gender || ""
+                        };
                         resolve();
                     }
                     else {
@@ -23,8 +41,18 @@
             return $q(function (resolve, reject) {
                 $http.post("https://instafake-api.herokuapp.com/register", { username: username, password: password, email: email }).then(function (result) {
                     if (result.status == 201) {
-                        user = { id: result.data.id, username: result.data.username };
-                        console.log("success");
+                        user = {
+                            id: result.data.id,
+                            username: result.data.username,
+                            email: result.data.email,
+                            avatar: result.data.avatar || "",
+                            nickname: result.data.nickname || "",
+                            website: result.data.website || "",
+                            bio: result.data.bio || "",
+                            mobile: result.data.mobile || "",
+                            gender: result.data.gender || ""
+
+                        };
                         resolve();
                     }
                     else {

@@ -29,7 +29,7 @@ angular.module('app.controllers', ['ngCordova'])
         $ionicHistory.nextViewOptions({
             disableBack: true
         });
-        $state.go('tab.home');
+        $state.go('start');
     }
     $scope.user = {
         username: "",
@@ -42,7 +42,7 @@ angular.module('app.controllers', ['ngCordova'])
             $ionicHistory.nextViewOptions({
                 disableBack: true
             });
-            $state.go('tab.home');
+            $state.go('start');
         }).catch(function () {
             var alertPopup = $ionicPopup.alert({
                 title: 'Username has been used',
@@ -176,7 +176,7 @@ angular.module('app.controllers', ['ngCordova'])
     }
 })
 
-.controller('CameraCtrl', function ($scope, $rootScope, $state, $ionicHistory, $cordovaCamera) {
+.controller('CameraCtrl', function ($scope, $rootScope, $state, $ionicHistory, $cordovaCamera, $ionicPlatform) {
     $scope.tabs = {
         gallery: true,
         photo: false
@@ -192,15 +192,12 @@ angular.module('app.controllers', ['ngCordova'])
         $scope.tabs.photo = false;
     }
     $scope.choosePhoto = function () {
-        var options = {
-            quality: 100,
-            destinationType: Camera.DestinationType.FILE_URI,
+        var options =  {
+            quality: 50,
+            destinationType: Camera.DestinationType.FILE_URI,            
             sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
             encodingType: Camera.EncodingType.JPEG,
-            targetWidth: 300,
-            targetHeight: 300,
-            popoverOptions: CameraPopoverOptions,
-            saveToPhotoAlbum: false
+            mediaType: Camera.MediaType.PICTURE             
         };
 
         $cordovaCamera.getPicture(options).then(function (imageData) {
@@ -216,29 +213,28 @@ angular.module('app.controllers', ['ngCordova'])
     }
     $scope.takePhoto = function () {
         var options = {
-            quality: 100,
+            quality: 50,
             destinationType: Camera.DestinationType.FILE_URI,
             sourceType: Camera.PictureSourceType.CAMERA,
             encodingType: Camera.EncodingType.JPEG,
-            allowEdit: true,
-            targetWidth: 300,
-            targetHeight: 300,
-            popoverOptions: CameraPopoverOptions,
-            saveToPhotoAlbum: true
+            mediaType: Camera.MediaType.PICTURE
         };
 
-        $cordovaCamera.getPicture(options).then(function (imageData) {
-            $rootScope.imgURI = imageData;
-        }, function (err) {
-            // An error occured. Show a message to the user
+        $ionicPlatform.ready(function () {
+            $cordovaCamera.getPicture(options).then(function (imageData) {
+                $rootScope.imgURI = imageData;
+            }, function (err) {
+                // error
+            });
         });
     }
     
     $scope.confimPost = function () {
+
         $state.go('post-confirm');
     }
 })
-.controller('PostConfirmCtrl', function ($scope, $rootScope, $state, $ionicHistory, PersonalInfo, Posts) {
+.controller('PostConfirmCtrl', function ($scope, $ionicHistory, $ionicPlatform, $cordovaFileTransfer, $http, $rootScope, $state) {
     $scope.goBack = function () {
         $ionicHistory.nextViewOptions({
             disableBack: true
@@ -246,11 +242,12 @@ angular.module('app.controllers', ['ngCordova'])
         $state.go('tab.camera');
     }
 
-    var profile = PersonalInfo.all();
+    /*var profile = Users.all();
     var posts = Posts.all();
     $scope.master = {};
     $scope.confirmPost = function (caption) {
         $scope.master = angular.copy(caption);
+        profile.count.posts++;
         Posts.add({
             id: posts.length,
             user: {
@@ -264,6 +261,19 @@ angular.module('app.controllers', ['ngCordova'])
             comments: []
         });
         $state.go('tab.home');
+    }*/
+    $scope.confirmPost = function () {
+        var options = new FileUploadOptions()
+        options.fileKey = "image";
+
+        $cordovaFileTransfer.upload('https://instafake-api.herokuapp.com/upload', $rootScope.imgURI, options).then(function (result) {
+            $state.go('tab.home');
+            //Function sucessful
+        }, function (err) {
+            //Function error
+        }, function (progress) {
+            // constant progress updates
+        });
     }
 
 })
@@ -284,8 +294,9 @@ angular.module('app.controllers', ['ngCordova'])
         $scope.content = People.all();
     };
 })
-.controller('ProfileCtrl', function ($scope, PersonalInfo, Posts) {
-    $scope.profile = PersonalInfo.all();
+.controller('ProfileCtrl', function ($scope, PersonalInfo, Posts, Users) {
+
+    $scope.profile = Users.all();
     function getselfPost() {
         $scope.data = Posts.all();
         $scope.posts = [];
@@ -308,7 +319,6 @@ angular.module('app.controllers', ['ngCordova'])
         $scope.tabs.place = false;
         $scope.tabs.tag = false;
         getselfPost();
-        console.log($scope.posts);
     }
     $scope.showRow = function () {
         $scope.tabs.grid = false;
@@ -316,7 +326,6 @@ angular.module('app.controllers', ['ngCordova'])
         $scope.tabs.place = false;
         $scope.tabs.tag = false;
         getselfPost();
-        console.log($scope.posts);
         $scope.toggleLike = function (post, $event) {
             post.isliked = !post.isliked;
             if (post.isliked) {
@@ -353,8 +362,51 @@ angular.module('app.controllers', ['ngCordova'])
         $state.go("start")
     }
 })
-.controller('EditCtrl', function ($scope, PersonalInfo) {
-    $scope.profile = PersonalInfo.all();
+.controller('EditCtrl', function ($scope, $rootScope, $state, $ionicHistory, $cordovaCamera, Users) {
+    console.log(Users.all());
+
+    $scope.goBack = function () {
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+        $state.go('tab.profile');
+    }
+
+    $scope.choosePhoto = function () {
+        var options = {
+            quality: 100,
+            destinationType: Camera.DestinationType.FILE_URI,
+            sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 300,
+            targetHeight: 300,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function (imageData) {
+            $rootScope.imgURI = imageData;
+        }, function (err) {
+            // An error occured. Show a message to the user
+        });
+    }
+
+    $scope.profile = Users.all();
+    $scope.saveInfo = function () {
+        var newInfo = {
+            id : $scope.profile.id,
+            nickname: $scope.profile.nickname,
+            username: $scope.profile.username,
+            website: $scope.profile.website,
+            bio: $scope.profile.bio,
+            email: $scope.profile.email,
+            mobile: $scope.profile.mobile,
+            gender: $scope.profile.gender
+        };
+        Users.edit(newInfo);
+        $state.go('tab.profile');
+    }
+
 })
 
 .controller('ChatsCtrl', function ($scope, Chats) {

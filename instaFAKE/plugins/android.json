@@ -30,6 +30,12 @@
         },
         "cordova-plugin-image-picker": {
             "PACKAGE_NAME": "io.cordova.myapp04389c"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "io.cordova.myapp04389c"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "io.cordova.myapp04389c"
         }
     },
     "dependent_plugins": {

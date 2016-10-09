@@ -1,20 +1,29 @@
-angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented-control', 'ngCordova'])
+angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ngCordova'])
 .config(function ($ionicConfigProvider) {
     $ionicConfigProvider.tabs.position('bottom');
 })
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
         if (cordova.platformId === "ios" && window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
 
         }
         if (window.StatusBar) {
-            // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
+        }
+
+        if (!$cordovaNetwork.isOnline()) {
+            if (Constants.DEBUGMODE) {
+                console.log("No NETWORK FOUND");
+                // at this point we need to broadcast a no network found event and the app.controller will get that and display the popup
+                $rootScope.$broadcast('event:app-networkRequired');
+            }
+        } else {
+            if (Constants.DEBUGMODE) {
+                console.log("NETWORK FOUND");
+            }
         }
     });
 })
@@ -23,171 +32,161 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'ti-segmented
 
     $stateProvider
 
+    .state('start', {
+        url: '/start',
+        controller: 'StartCtrl',
+        templateUrl: "templates/start.html",
+        //authenticate: false,
+    })
+    .state('register', {
+        url: '/register',
+        controller: 'RegisterCtrl',
+        templateUrl: "templates/register.html"
+        //authenticate: false,
+    })
+
     .state('tab', {
         url: '/tab',
         abstract: true,
-        templateUrl: 'templates/tabs.html'
+        templateUrl: 'templates/tabs.html',
+        //authenticate: true,
     })
 
     .state('tab.home', {
         url: '/home',
         views: {
             'tab-home': {
-                templateUrl: 'templates/tab-home.html',
+                templateUrl: 'templates/home/tab-home.html',
                 controller: 'HomeCtrl'
             }
-        }
+        },
+        //authenticate: true,
+    })
+    .state('tab.comment', {
+        url: '/comment/:postId',
+        views: {
+            'tab-home': {
+                templateUrl: 'templates/home/comment.html',
+                controller: 'CommentCtrl'
+            }
+        },
+        //authenticate: true,
     })
 
     .state('tab.chats', {
         url: '/chats',
         views: {
             'tab-home': {
-                templateUrl: 'templates/tab-chats.html',
+                templateUrl: 'templates/home/tab-chats.html',
                 controller: 'ChatsCtrl'
             }
-        }
+        },
+        //authenticate: true,
     })
     .state('tab.chat-detail', {
         url: '/chats/:chatId',
         views: {
             'tab-home': {
-                templateUrl: 'templates/chat-detail.html',
+                templateUrl: 'templates/home/chat-detail.html',
                 controller: 'ChatDetailCtrl'
             }
-        }
+        },
+        //authenticate: true,
     })
 
     .state('tab.explore', {
         url: '/explore',
         views: {
             'tab-explore': {
-                templateUrl: 'templates/tab-explore.html',
+                templateUrl: 'templates/explore/tab-explore.html',
                 controller: 'ExploreCtrl'
             }
-        }
+        },
+        //authenticate: true,
     })
     .state('tab.search', {
         url: '/search',
         views: {
             'tab-explore': {
-                templateUrl: 'templates/tab-search.html',
+                templateUrl: 'templates/explore/tab-search.html',
                 controller: 'SearchCtrl'
             }
-        }
+        },
+        //authenticate: true,
     })
 
     .state('tab.camera', {
         url: '/camera',
         views: {
             'tab-camera': {
-                templateUrl: 'templates/tab-camera.html',
-                controller: 'GalleryCtrl'
-            }
-        }
-    })
-    .state('tab.camera1', {
-        url: '/camera1',
-        views: {
-            'tab-camera': {
-                templateUrl: 'templates/tab-camera1.html',
+                templateUrl: 'templates/camera/tab-camera.html',
                 controller: 'CameraCtrl'
             }
-        }
+        },
+        //authenticate: true,
     })
-    .state('tab.camera2', {
-        url: '/camera2',
-        views: {
-            'tab-camera': {
-                templateUrl: 'templates/tab-camera2.html',
-                controller: 'CameraCtrl'
-            }
-        }
+    .state('post-confirm', {
+        url: '/confirm',
+        templateUrl: 'templates/camera/post-confirm.html',
+        controller: 'PostConfirmCtrl',
+        //authenticate: true,
     })
 
     .state('tab.like', {
         url: '/like',
         views: {
             'tab-like': {
-                templateUrl: 'templates/tab-like.html',
+                templateUrl: 'templates/following/tab-like.html',
                 controller: 'LikeCtrl'
             }
-        }
-    })
-    .state('tab.like1', {
-        url: '/like1',
-        views: {
-            'tab-like': {
-                templateUrl: 'templates/tab-like1.html',
-                controller: 'LikeCtrl'
-            }
-        }
+        },
+        //authenticate: true,
     })
 
     .state('tab.profile', {
         url: '/profile',
         views: {
             'tab-profile': {
-                templateUrl: 'templates/tab-profile.html',
+                templateUrl: 'templates/profile/tab-profile.html',
                 controller: 'ProfileCtrl'
             }
-        }
+        },
+        //authenticate: true,
     })
-    .state('tab.profile1', {
-        url: '/profile1',
-        views: {
-            'tab-profile': {
-                templateUrl: 'templates/tab-profile1.html',
-                controller: 'ProfileCtrl'
-            }
-        }
-    })
-    .state('tab.profile2', {
-        url: '/profile2',
-        views: {
-            'tab-profile': {
-                templateUrl: 'templates/tab-profile2.html',
-                controller: 'ProfileCtrl'
-            }
-        }
-    })
-    .state('tab.profile3', {
-        url: '/profile3',
-        views: {
-            'tab-profile': {
-                templateUrl: 'templates/tab-profile3.html',
-                controller: 'ProfileCtrl'
-            }
-        }
-    })
+
     .state('tab.discover', {
         url: '/discover',
         views: {
             'tab-profile': {
-                templateUrl: 'templates/profile-discover.html',
+                templateUrl: 'templates/profile/profile-discover.html',
                 controller: 'DiscoverCtrl'
             }
-        }
+        },
+        //authenticate: true,
     })
+
     .state('tab.setting', {
         url: '/options',
         views: {
             'tab-profile': {
-                templateUrl: 'templates/profile-options.html',
+                templateUrl: 'templates/profile/profile-options.html',
                 controller: 'OptionsCtrl'
             }
-        }
+        },
+        //authenticate: true,
     })
+
     .state('tab.edit', {
         url: '/edit',
         views: {
             'tab-profile': {
-                templateUrl: 'templates/profile-edit.html',
+                templateUrl: 'templates/profile/profile-edit.html',
                 controller: 'EditCtrl'
             }
-        }
+        },
+        //authenticate: true,
     });
 
-    $urlRouterProvider.otherwise('/tab/home');
+    $urlRouterProvider.otherwise('/start');
 
 });

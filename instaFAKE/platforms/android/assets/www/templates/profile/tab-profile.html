@@ -1,6 +1,6 @@
 <ion-view hide-back-button="true" cache-view="false">
-    <ion-nav-title>
-        <h4>{{profile.name}}</h4>
+    <ion-nav-title side="left">
+        <h4>{{profile.username}}</h4>
     </ion-nav-title>
     <ion-nav-buttons side="right">
         <a class="button button-clear icon ion-android-person-add" href="#/tab/discover"></a>
@@ -12,20 +12,20 @@
                 <img ng-src="{{profile.avatar}}" />
             </div>
             <div class="col col-66 center">
-                <div class="row">
+                <!--<div class="row">
                     <div class="col col-33 abc">
-                        <b>{{profile.posts}}</b><br />
+                        <b>{{profile.count.post}}</b><br />
                         <p>posts</p>
                     </div>
                     <div class="col col-33 abc">
-                        <b>{{profile.followers}}</b><br />
+                        <b>{{profile.count.followed_by}}</b><br />
                         <p>followers</p>
                     </div>
                     <div class="col col-33 abc">
-                        <b>{{profile.following}}</b><br />
+                        <b>{{profile.count.follows}}</b><br />
                         <p>following</p>
                     </div>
-                </div>
+                </div>-->
                 <div class="row">
                     <a class="button bar-stable edit-button full-width" href="#/tab/edit">
                         EDIT YOUR PROFILE

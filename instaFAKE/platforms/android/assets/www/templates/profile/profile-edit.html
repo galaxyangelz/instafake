@@ -1,49 +1,70 @@
-﻿<ion-view view-title="Edit" cache-view="false">
+﻿<ion-view hide-nav-bar="true" cache-view="false">
+    <ion-header-bar align-title="left">
+        <div class="buttons">
+            <button class="button button-icon ion-ios-arrow-back" ng-click="goBack()"></button>
+        </div>
+    </ion-header-bar>
     <ion-content class="margin-content has-header" overflow-scroll="false">
-        <div class="item-avatar profile-avatar">
-            <img ng-src="{{profile.avatar}}">
+        <div class="row">
+            <div class="item-avatar profile-avatar">
+                <img ng-src="{{profile.avatar}}">
+            </div>
         </div>
         <div class="row">
-            <a>Change Profile Photo</a>
+            <h1 class="col col-50">{{profile.username}}</h1>
+        </div>
+
+        <div class="row">
+            <button ng-click="choosePhoto()">Change Profile Photo</button>
         </div>
         <hr />
         <div class="row">
             <i class="ion-person icon-larger"></i>
-            <input type="text" placeholder="{{profile.nickname}}">
-        </div>
-        <hr />
-        <div class="row">
-            <i class="ion-person icon-larger"></i>
-            <input type="text" placeholder="{{profile.name}}">
+            <label class="item item-input">
+                <input type="text" ng-model="profile.nickname" placeholder="{{profile.nickname}}">
+            </label>
         </div>
         <hr />
         <div class="row">
             <i class="ion-android-compass icon-larger"></i>
-            <input type="text" placeholder="{{profile.website}}">
+            <label class="item item-input">
+                <input type="text" ng-model="profile.website" placeholder="{{profile.website}}">
+            </label>
         </div>
         <hr />
         <div class="row">
             <i class="ion-quote icon-larger"></i>
-            <input type="text" placeholder="{{profile.bio}}">
+            <label class="item item-input">
+                <input type="text" ng-model="profile.bio" placeholder="{{profile.bio}}">
+            </label>
         </div>
         <hr />
         <b class="row">PRIVATE INFORMATION</b>
         <hr />
         <div class="row">
             <i class="ion-email icon-larger"></i>
-            <input type="text" placeholder="{{profile.email}}">
+            <label class="item item-input">
+                <input type="text" ng-model="profile.email" placeholder="{{profile.email}}">
+            </label>
         </div>
         <hr />
         <div class="row">
             <i class="ion-iphone icon-larger"></i>
-            <input type="text" placeholder="{{profile.mobile}}">
+            <label class="item item-input">
+                <input type="text" ng-model="profile.mobile" placeholder="{{profile.mobile}}">
+            </label>
         </div>
         <hr />
         <div class="row">
             <i class="ion-transgender icon-larger"></i>
-            <input type="text" placeholder="{{profile.gender}}">
+            <label class="item item-input">
+                <input type="text" ng-model="profile.gender" placeholder="{{profile.gender}}">
+            </label>
         </div>
         <hr />
+        <button class="button button-block button-positive" ng-click="saveInfo()">
+            Save Info
+        </button>
 
     </ion-content>
 </ion-view>

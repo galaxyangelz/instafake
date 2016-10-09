@@ -2,15 +2,6 @@
 a { text-decoration:none !important; }
 .card { margin: 0 !important; }
 
-.popup-vertical-buttons .popup-buttons {
-  display: block;
-}
-.popup-vertical-buttons .popup-buttons .button{
-  text-align:left;
-  display:block;
-  min-width: 100% !important;
-}
-
 .full-width { width: 90%; }
 .profile-avatar {
     margin-bottom:3rem;
@@ -38,4 +29,17 @@ input {
 
 .icon-larger {
     font-size:25px;
+}
+.headerInput
+{
+    background-color: transparent;
+    width: 100%;
+}
+
+.tabs.tabs-top.custom-tabs-top
+{
+    position: initial;
+}
+.abc {
+    padding: 0;
 }

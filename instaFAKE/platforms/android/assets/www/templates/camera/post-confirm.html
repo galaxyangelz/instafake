@@ -15,8 +15,18 @@
                 <label class="item item-input item-text-wrap">
                     <input type="text" placeholder="Write a caption..." ng-model="caption">
                 </label>
-                <input value="Share" type="submit" class="button button-positive " ng-click="confirmPost(caption)">
+                <input value="Share" type="submit" class="button button-positive " ng-click="confirmPost()">
             </form>
         </div>
+        <div>
+            {{ uploadResults }}
+        </div>
+        <button class="button button-balanced" ng-click="testConnection()">
+            Test server connection
+        </button>
+        <div>
+            {{ serverConnection }}
+        </div>
+
     </ion-content>
 </ion-view>
