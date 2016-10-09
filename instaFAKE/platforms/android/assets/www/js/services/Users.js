@@ -20,7 +20,7 @@
                             id: result.data.id, 
                             username: result.data.username, 
                             email: result.data.email,
-                            avatar: result.data.avatar || "",
+                            avatar: result.data.avatar || "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png",
                             nickname: result.data.nickname || "",
                             website: result.data.website || "",
                             bio: result.data.bio || "",
