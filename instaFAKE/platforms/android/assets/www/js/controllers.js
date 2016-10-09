@@ -70,10 +70,10 @@ angular.module('app.controllers', ['ngCordova'])
     }
 })*/
 .controller('HomeCtrl', function ($scope, Posts, PostsAPI) {
-    Posts.following().then(function (data) {
+    /*Posts.following().then(function (data) {
         $scope.posts = data;
     }
-    );
+    );*/
     PostsAPI.all().then(function (data) {
         $scope.postsAPI = data;
     });
